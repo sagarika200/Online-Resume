@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sagarika's Dynamic Portfolio</title>
+    <!-- Google Fonts: Poppins for headings, Open Sans for body text -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Color Palette - Day Theme (Earthy/Rustic) */
+        :root {
+            --primary-color: #4A2C2A; /* Deep Rustic Brown */
+            --accent-color: #D48C5B; /* Muted Rustic Orange */
+            --text-color: #382B2A; /* Dark Brown Text */
+            --light-text-color: #6B5A58; /* Medium Brown Text */
+            --background-light: #E8DCD6; /* Light Peachy Brown Background */
+            --background-white: #FBF8F6; /* Very Light Warm White for cards */
+            --card-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            --hover-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            --border-radius: 12px;
+            --header-bg: var(--background-white);
+            --footer-bg: var(--primary-color);
+            --footer-text: white;
+            --section-even-bg: var(--background-light);
+            --section-odd-bg: var(--background-white);
+            --modal-bg: var(--background-white);
+            --modal-overlay: rgba(0,0,0,0.7);
+
+            /* Gradient Colors - Day Theme */
+            --body-gradient-start-day: #F5EFEA;
+            --body-gradient-end-day: #E8DCD6;
+            --button-gradient-start-day: #D48C5B;
+            --button-gradient-end-day: #C07B4A;
+            --github-gradient-start-day: #333;
+            --github-gradient-end-day: #111;
+
+            --primary-color-rgb: 74, 44, 42; /* RGB for #4A2C2A */
+        }
+
+        /* Color Palette - Night Theme (Earthy/Rustic - Darkened) */
+        body.night-theme {
+            --primary-color: #7A4F4C; /* Lighter Rustic Brown for contrast */
+            --accent-color: #F5B07C; /* Brighter Rustic Orange */
+            --text-color: #E0E0E0; /* Light grey text */
+            --light-text-color: #B0B0B0;
+            --background-light: #2A1E1D; /* Dark Brown Background */
+            --background-white: #1E1615; /* Even darker Brown for cards/sections */
+            --card-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            --hover-shadow: 0 8px 25px rgba(0,0,0,0.5);
+            --header-bg: var(--background-white);
+            --footer-bg: #150F0E;
+            --footer-text: #B0B0B0;
+            --section-even-bg: #2C2C2C;
+            --section-odd-bg: #1E1E1E;
+            --modal-bg: var(--background-white);
+            --modal-overlay: rgba(0,0,0,0.85);
+
+            /* Gradient Colors - Night Theme */
+            --body-gradient-start-night: #1F1716;
+            --body-gradient-end-night: #2A1E1D;
+            --button-gradient-start-night: #F5B07C;
+            --button-gradient-end-night: #E09D6A;
+            --github-gradient-start-night: #555;
+            --github-gradient-end-night: #333;
+
+            --primary-color-rgb: 122, 79, 76; /* RGB for #7A4F4C */
+        }
+
+        /* Base Styles & Typography */
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            /* Apply gradient background */
+            background: linear-gradient(to bottom, var(--body-gradient-start-day), var(--body-gradient-end-day));
+            background-attachment: fixed; /* Ensures gradient covers full scrollable area */
+            color: var(--text-color);
+            line-height: 1.6;
+            scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+            transition: background-color 0.5s ease, color 0.5s ease; /* Smooth theme transition */
+        }
+
+        body.night-theme {
+            background: linear-gradient(to bottom, var(--body-gradient-start-night), var(--body-gradient-end-night));
+            background-attachment: fixed;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            transition: color 0.5s ease; /* Smooth theme transition */
+        }
+
+        h1 { font-size: 3.5em; text-align: center; }
+        h2 { font-size: 2.8em; text-align: center; }
+        h3 { font-size: 1.8em; }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: var(--accent-color);
+        }
+
+        .highlight {
+            color: var(--accent-color);
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--header-bg);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--card-shadow);
+            transition: background-color 0.5s ease, box-shadow 0.5s ease; /* Smooth theme transition */
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .site-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--primary-color);
+            transition: color 0.5s ease; /* Smooth theme transition */
+        }
+
+        #main-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        #main-nav ul li {
+            margin-left: 30px;
+        }
+
+        #main-nav ul li a {
+            font-weight: 600;
+            padding: 5px 0;
+            position: relative;
+            color: var(--light-text-color);
+            transition: color 0.5s ease; /* Smooth theme transition */
+        }
+
+        #main-nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            left: 0;
+            bottom: -5px;
+            transition: width 0.3s ease-out, background-color 0.5s ease; /* Smooth theme transition */
+        }
+
+        #main-nav ul li a:hover::after,
+        #main-nav ul li a.active::after {
+            width: 100%;
+        }
+        #main-nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Theme Toggle Button */
+        #theme-toggle {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--card-shadow);
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            margin-left: 20px; /* Space from nav links */
+        }
+
+        #theme-toggle:hover {
+            background-color: var(--accent-color);
+            transform: scale(1.1);
+        }
+
+
+        /* Sections */
+        .section {
+            padding: 80px 0;
+            margin-bottom: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            overflow: hidden; /* For animations */
+            transition: background-color 0.5s ease, box-shadow 0.5s ease; /* Smooth theme transition */
+        }
+
+        .section:nth-child(odd) { /* Profile, Skills, Certificates, Contact */
+            background-color: var(--section-odd-bg);
+        }
+        .section:nth-child(even) { /* Education, Projects, Interests */
+            background-color: var(--section-even-bg);
+        }
+
+
+        .section-title {
+            margin-bottom: 40px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color)); /* Gradient underline */
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 0;
+            transition: background 0.5s ease; /* Smooth theme transition */
+        }
+
+        /* Hero Section */
+        .hero-section {
+            padding-top: 120px;
+            padding-bottom: 80px;
+            background: linear-gradient(135deg, var(--section-odd-bg), var(--section-even-bg));
+            border-radius: 0; /* No border-radius for hero to span full width */
+            box-shadow: none;
+            transition: background 0.5s ease; /* Smooth theme transition */
+        }
+
+        .profile-content {
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Center content horizontally */
+            flex-wrap: wrap-reverse; /* Image on top on mobile */
+            gap: 40px;
+        }
+
+        .profile-text {
+            flex: 2;
+            min-width: 300px;
+            text-align: center; /* Center text */
+        }
+
+        .profile-text h1 {
+            font-size: 4em;
+            text-align: center; /* Center heading */
+            margin-bottom: 15px;
+            line-height: 1.1;
+        }
+
+        .profile-text .lead {
+            font-size: 1.3em;
+            text-align: center; /* Center lead text */
+            margin-bottom: 30px;
+            color: var(--light-text-color);
+            transition: color 0.5s ease; /* Smooth theme transition */
+        }
+
+        .profile-image {
+            /* This entire block is removed as per user request */
+            display: none; /* Hide the profile image */
+        }
+
+        .social-links {
+            margin-top: 20px;
+            text-align: center; /* Center social links */
+        }
+
+        .social-links a {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            margin-right: 15px;
+            border-radius: 50px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            font-weight: 600;
+        }
+
+        .social-links a:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-5px);
+        }
+
+        .social-links a i {
+            margin-right: 8px;
+        }
+
+        /* Card Styling - General */
+        .card {
+            background-color: var(--background-white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            padding: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.5s ease; /* Smooth theme transition */
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        /* Education Grid */
+        .education-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .education-item {
+            text-align: center;
+            border-top: 5px solid var(--primary-color);
+            padding-top: 20px;
+            transition: border-color 0.5s ease; /* Smooth theme transition */
+        }
+        .education-item .degree, .duration, .grade {
+            color: var(--light-text-color);
+            transition: color 0.5s ease; /* Smooth theme transition */
+        }
+
+        /* Skills Grid - New Card Type */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .skill-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 150px;
+            cursor: pointer;
+            position: relative; /* For pseudo-elements */
+            overflow: hidden; /* Hide overflow from glow */
+            border: 2px solid transparent; /* Initial transparent border */
+            background-color: var(--background-white); /* Ensure background is set */
+            transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, background-color 0.5s ease;
+        }
+
+        .skill-item:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 8px 20px rgba(var(--primary-color-rgb), 0.3); /* Subtle glow effect */
+            border-color: var(--primary-color); /* Highlight border on hover */
+        }
+
+
+        .skill-icon {
+            font-size: 3em;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            transition: color 0.5s ease;
+        }
+
+        .languages-section {
+            margin-top: 60px;
+            text-align: center;
+        }
+        .languages-section ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .languages-section li {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            transition: background-color 0.5s ease;
+        }
+
+        /* Projects Grid - New Card Type */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .project-item {
+            text-align: center;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background-color: var(--background-white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            transition: transform 0.4s ease-out, box-shadow 0.4s ease-out, border 0.4s ease-out, background-color 0.5s ease; /* Added border transition */
+            position: relative;
+            border: 2px solid transparent; /* Initial transparent border */
+        }
+
+        .project-item:hover {
+            transform: translateY(-10px) scale(1.02); /* More pronounced lift and slight scale */
+            box-shadow: 0 0 20px 5px rgba(var(--primary-color-rgb), 0.4), var(--hover-shadow); /* Stronger glow + existing shadow */
+            border-color: var(--accent-color); /* Highlight border on hover */
+        }
+
+        .project-image-placeholder {
+            width: 100%;
+            height: 200px;
+            background-color: var(--background-light);
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative; /* For potential overlay */
+        }
+
+        .project-image-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .project-item:hover .project-image-placeholder img {
+            transform: scale(1.15); /* More pronounced zoom */
+        }
+
+        /* Optional: Add a subtle overlay on image hover */
+        .project-image-placeholder::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(var(--primary-color-rgb), 0.1); /* Subtle color overlay */
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-item:hover .project-image-placeholder::after {
+            opacity: 1;
+        }
+
+        .project-content-body {
+            padding: 15px; /* Added padding to top */
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .project-item h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: var(--text-color);
+            transition: color 0.5s ease;
+        }
+        /* New style for smaller project titles */
+        .project-item h3.small-project-title {
+            font-size: 1.4em; /* Smaller font size for specific titles */
+            margin-bottom: 10px; /* Adjust margin as needed */
+        }
+        .project-item:hover h3 {
+            color: var(--primary-color);
+        }
+
+        .project-buttons { /* New container for buttons */
+            display: flex;
+            flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+            justify-content: center; /* Center buttons */
+            gap: 10px; /* Space between buttons */
+            margin-top: auto; /* Push to bottom if flex column on parent */
+        }
+
+        .project-buttons .project-link-button {
+            margin-top: 0; /* Override previous margin-top */
+        }
+
+        .project-link-button {
+            display: inline-block;
+            /* Apply gradient background to buttons */
+            background: linear-gradient(to right, var(--button-gradient-start-day), var(--button-gradient-end-day));
+            color: white; /* Default text color */
+            padding: 10px 20px;
+            border: none; /* Remove default button border */
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease; /* Added color transition */
+            align-self: center;
+            width: fit-content;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Subtle shadow for depth */
+        }
+
+        body.night-theme .project-link-button {
+            background: linear-gradient(to right, var(--button-gradient-start-night), var(--button-gradient-end-night));
+        }
+
+        .project-link-button:hover {
+            /* Slightly shift gradient or darken on hover */
+            background-position: right center; /* Example for background-position animation */
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            color: white; /* Keep text white on hover for better contrast with gradient */
+        }
+
+        /* Specific style for GitHub button */
+        .github-button {
+            background: linear-gradient(to right, var(--github-gradient-start-day), var(--github-gradient-end-day)); /* Darker gradient for GitHub */
+            color: white;
+        }
+        body.night-theme .github-button {
+            background: linear-gradient(to right, var(--github-gradient-start-night), var(--github-gradient-end-night));
+        }
+        .github-button:hover {
+            background-position: right center;
+            color: white; /* Keep text white on hover for dark button */
+        }
+
+
+        .project-link-button i {
+            margin-left: 8px;
+        }
+
+        /* Certificates - New Card Type */
+        .certificates-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        .certificate-item {
+            text-align: center;
+            border: 2px solid var(--primary-color); /* Solid border */
+            min-height: 100px; /* Reduced from 120px */
+            padding: 15px; /* Adjusted padding for smaller size */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background-color: var(--background-white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .certificate-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Stronger gradient overlay on hover */
+            background: linear-gradient(45deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-out;
+            z-index: 0;
+            opacity: 0.3; /* Increased opacity for more noticeable effect */
+        }
+
+        .certificate-item:hover::before {
+            transform: translateX(0);
+        }
+
+        .certificate-item h3 {
+            margin-bottom: 0;
+            position: relative; /* Keep text above overlay */
+            z-index: 1;
+            color: var(--text-color); /* Ensure visibility */
+            transition: color 0.3s ease;
+        }
+
+        .certificate-item:hover h3 {
+            color: var(--background-white); /* Change text to white on hover for better contrast with gradient overlay */
+        }
+
+
+        /* Interests */
+        .interests-list {
+            list-style: none;
+            padding: 0;
+            text-align: center;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .interests-list li {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease, background-color 0.5s ease, box-shadow 0.5s ease; /* Smooth theme transition */
+        }
+        .interests-list li:hover {
+            transform: translateY(-5px) scale(1.05);
+            background-color: var(--accent-color);
+        }
+        .interests-list li i {
+            font-size: 1.2em;
+        }
+
+        /* Contact Section */
+        #contact {
+            text-align: center;
+            padding-bottom: 80px;
+        }
+        .contact-text {
+            font-size: 1.1em;
+            color: var(--light-text-color);
+            margin-bottom: 30px;
+            transition: color 0.5s ease; /* Smooth theme transition */
+        }
+        .social-links.large-icons a {
+            font-size: 2em;
+            padding: 15px;
+            margin: 0 10px;
+            border-radius: 50%;
+            width: 60px; /* Ensure circular shape */
+            height: 60px; /* Ensure circular shape */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            text-align: center;
+            padding: 25px 0;
+            font-size: 0.9em;
+            transition: background-color 0.5s ease, color 0.5s ease; /* Smooth theme transition */
+        }
+
+        /* Pop-up/Modal Styling */
+        .modal {
+            display: none; /* Hidden by default, JS will change to flex */
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--modal-overlay);
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.5s ease; /* Smooth theme transition */
+        }
+
+        .modal.show {
+            opacity: 1;
+            visibility: visible;
+            display: flex; /* Ensure it's flex when shown */
+        }
+
+        .modal-content {
+            background-color: var(--modal-bg);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--hover-shadow);
+            width: 90%;
+            max-width: 700px;
+            position: relative;
+            transform: translateY(-50px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.5s ease; /* Smooth theme transition */
+        }
+
+        .modal.show .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .close-button {
+            color: var(--light-text-color);
+            font-size: 32px;
+            font-weight: bold;
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: var(--primary-color);
+        }
+
+        .modal-content h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+            text-align: left;
+        }
+        .modal-content p {
+            color: var(--light-text-color);
+        }
+
+        /* Keyframe Animations */
+        @keyframes fadeInSlideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Apply staggered animation to hero elements */
+        .animate-hero {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInSlideUp 0.8s forwards;
+        }
+        .animate-hero.delay-1 { animation-delay: 0.2s; }
+        .animate-hero.delay-2 { animation-delay: 0.4s; }
+        .animate-hero.delay-3 { animation-delay: 0.6s; }
+
+
+        /* Animation for sections on scroll */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .animate-on-scroll.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.8em; }
+            h2 { font-size: 2em; }
+            h3 { font-size: 1.5em; }
+
+            .site-title { font-size: 1.5em; }
+            #main-nav ul {
+                display: none; /* Hide nav on small screens by default */
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                background-color: var(--header-bg); /* Use header bg for mobile nav */
+                position: absolute;
+                top: 60px; /* Adjust based on header height */
+                left: 0;
+                box-shadow: var(--card-shadow);
+            }
+            #main-nav ul.show {
+                display: flex; /* Show when toggled */
+            }
+            #main-nav ul li {
+                margin: 10px 0;
+            }
+            #main-nav ul li a {
+                color: var(--text-color);
+            }
+
+            .nav-content {
+                justify-content: center; /* Center title on mobile */
+            }
+
+            .profile-text h1 {
+                font-size: 2.8em;
+                text-align: center;
+            }
+            .profile-text .lead {
+                text-align: center;
+            }
+            .social-links {
+                text-align: center;
+            }
+            .social-links a {
+                margin: 5px;
+            }
+            .profile-image img {
+                width: 200px;
+                height: 200px;
+            }
+
+            .skills-grid, .projects-grid, .education-grid, .certificates-list {
+                grid-template-columns: 1fr; /* Single column layout */
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav id="main-nav">
+            <div class="container nav-content">
+                <a href="#profile" class="site-title">Sagarika Hota</a>
+                <!-- Theme Toggle Button -->
+                <button id="theme-toggle" aria-label="Toggle Day/Night Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <ul>
+                    <li><a href="#profile">Home</a></li>
+                    <li><a href="#education">Education</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#certificates">Certificates</a></li>
+                    <li><a href="#interests">Interests</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="profile" class="section hero-section animate-on-scroll">
+            <div class="container profile-content">
+                <div class="profile-text">
+                    <h1 class="animate-hero">Hello, I'm <span class="highlight">Sagarika Hota</span></h1>
+                    <p class="lead animate-hero delay-1">A highly motivated IT student eager to learn and contribute, possessing strong analytical, problem-solving, and communication skills, seeking a challenging role to apply and enhance technical expertise.</p>
+                    <div class="social-links animate-hero delay-2">
+                        <a href="https://www.linkedin.com/in/sagarika-hota-b4471224a/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                        <a href="https://github.com/sagarika200" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i> GitHub</a>
+                        <a href="mailto:sagarikahota94@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i> Email</a>
+                        <a href="tel:+917978449693" aria-label="Phone"><i class="fas fa-phone"></i> Phone</a>
+                    </div>
+                </div>
+                <!-- The profile-image div has been removed -->
+            </div>
+        </section>
+
+        <section id="education" class="section animate-on-scroll">
+            <div class="container">
+                <h2 class="section-title">Education</h2>
+                <div class="education-grid">
+                    <div class="education-item card">
+                        <h3>Nist University</h3>
+                        <p class="degree">B.Tech</p>
+                        <p class="duration">2022-2026</p>
+                        <p class="grade">CGPA: 8.36</p>
+                    </div>
+                    <div class="education-item card">
+                        <h3>Central Board of Secondary Education</h3>
+                        <p class="degree">12th Science</p>
+                        <p class="duration">2022</p>
+                        <p class="grade">Percentage: 67%</p>
+                    </div>
+                    <div class="education-item card">
+                        <h3>Central Board of Secondary Education</h3>
+                        <p class="degree">10th</p>
+                        <p class="duration">2020</p>
+                        <p class="grade">Percentage: 84%</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="section animate-on-scroll">
+            <div class="container">
+                <h2 class="section-title">Technical Skills</h2>
+                <div class="skills-grid">
+                    <div class="skill-item card" data-full-desc="Good knowledge in core Python concepts including data structures (lists, tuples, dictionaries, sets), control flow (conditional statements, loops), functions, object-oriented programming (OOP), Error and Exceptional handling.">
+                        <i class="fab fa-python skill-icon"></i>
+                        <h3>Python 3</h3>
+                    </div>
+                    <div class="skill-item card" data-full-desc="Experienced in utilizing strong command of HTML5 and modern web standards. Skilled in creating clean, semantic, and accessible HTML layouts that integrate seamlessly with CSS and JavaScript. Passionate about responsive design and building websites that perform well across all devices.">
+                        <i class="fab fa-html5 skill-icon"></i>
+                        <h3>HTML 5</h3>
+                    </div>
+                    <div class="skill-item card" data-full-desc="Skilled in applying core CSS concepts including selectors, the box model and layout techniques (Flexbox, Grid).">
+                        <i class="fab fa-css3-alt skill-icon"></i>
+                        <h3>CSS 3</h3>
+                    </div>
+                    <div class="skill-item card" data-full-desc="Good Understanding of JavaScript Concepts, Functions, Objects, String (Inbuild-Methods), Array (Inbuild-Methods), DOM, jQuery.">
+                        <i class="fab fa-js-square skill-icon"></i>
+                        <h3>JavaScript (ES6)</h3>
+                    </div>
+                    <div class="skill-item card" data-full-desc="In progress of learning core React concepts and component-based architecture">
+                        <i class="fab fa-react skill-icon"></i>
+                        <h3>React</h3>
+                    </div>
+                    <div class="skill-item card" data-full-desc="Experienced with MySQL databases: creating schemas, querying data, and managing information for various applications using SQL.">
+                        <i class="fas fa-database skill-icon"></i>
+                        <h3>MySQL</h3>
+                    </div>
+                </div>
+                <div class="languages-section">
+                    <h3>Languages</h3>
+                    <ul>
+                        <li>English</li>
+                        <li>Hindi</li>
+                        <li>Odia</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="section animate-on-scroll">
+            <div class="container">
+                <h2 class="section-title">Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-item card" data-full-desc="Technology:- only HTML and CSS. It provides detailed information about iconic attractions, cultural heritage heritage sites, natural wonders, and travel itineraries across the country.">
+                        <div class="project-image-placeholder">
+                             <!-- Replace with actual project image -->
+                            <img src="images/project-travelnest.jpg" alt="TRAVELNEST project" onerror="this.onerror=null;this.src='https://placehold.co/280x200/cccccc/333333?text=TRAVELNEST';">
+                        </div>
+                        <div class="project-content-body">
+                            <h3 class="small-project-title"></h3> <!-- Added class for smaller text -->
+                            <div class="project-buttons"> <!-- New container for buttons -->
+                                <a href="https://github.com/sagarika200/TRAVELNEST" target="_blank" class="project-link-button github-button">
+                                    GitHub Repo <i class="fab fa-github"></i>
+                                </a>
+                                <a href="https://your-travelnest-demo.com" target="_blank" class="project-link-button">
+                                    View Project <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-item card" data-full-desc="Developed a browser-based Simon game using HTML, CSS, and jQuery, implementing dynamic pattern generation, user input handling, and game logic, including score tracking and difficulty scaling.">
+                        <div class="project-image-placeholder">
+                             <!-- Replace with actual project image -->
+                            <img src="images/project-simon.jpg" alt="Simon Game project" onerror="this.onerror=null;this.src='https://placehold.co/280x200/cccccc/333333?text=Simon+Game';">
+                        </div>
+                        <div class="project-content-body">
+                            <h3 class="small-project-title"></h3>
+                            <div class="project-buttons">
+                                <a href="https://github.com/sagarika200/Simon-Game" target="_blank" class="project-link-button github-button">
+                                    GitHub Repo <i class="fab fa-github"></i>
+                                </a>
+                                <a href="https://your-simon-game-demo.com" target="_blank" class="project-link-button">
+                                    View Project <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-item card" data-full-desc="Created an interactive two-player dice game web application using front-end technologies (HTML, CSS, JavaScript). Implemented page refresh-based dice rolling and win condition logic.">
+                        <div class="project-image-placeholder">
+                             <!-- Replace with actual project image -->
+                            <img src="images/project-dice.jpg" alt="Dice Game project" onerror="this.onerror=null;this.src='https://placehold.co/280x200/cccccc/333333?text=Dice+Game';">
+                        </div>
+                        <div class="project-content-body">
+                            <h3 class="small-project-title"></h3>
+                            <div class="project-buttons">
+                                <a href="https://github.com/sagarika200/Dice-Challenge" target="_blank" class="project-link-button github-button">
+                                    GitHub Repo <i class="fab fa-github"></i>
+                                </a>
+                                <a href="https://your-dice-game-demo.com" target="_blank" class="project-link-button">
+                                    View Project <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-item card" data-full-desc="Developed a JavaScript web drumkit leveraging DOM manipulation for user interaction. Captured keyboard and mouse events to play corresponding drum sounds.">
+                        <div class="project-image-placeholder">
+                             <!-- Replace with actual project image -->
+                            <img src="images/project-drumkit.jpg" alt="Drum kit project" onerror="this.onerror=null;this.src='https://placehold.co/280x200/cccccc/333333?text=Drum+Kit';">
+                        </div>
+                        <div class="project-content-body">
+                            <h3 class="small-project-title"></h3>
+                            <div class="project-buttons">
+                                <a href="https://github.com/sagarika200/Drum-kit" target="_blank" class="project-link-button github-button">
+                                    GitHub Repo <i class="fab fa-github"></i>
+                                </a>
+                                <a href="https://your-drumkit-demo.com" target="_blank" class="project-link-button">
+                                    View Project <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-item card" data-full-desc="Built a functional Hangman game with Python, where users guess letters to reveal a hidden word.">
+                        <div class="project-image-placeholder">
+                             <!-- Replace with actual project image -->
+                            <img src="images/project-hangman.jpg" alt="Hangman project" onerror="this.onerror=null;this.src='https://placehold.co/280x200/cccccc/333333?text=Hangman';">
+                        </div>
+                        <div class="project-content-body">
+                            <h3 class="small-project-title"></h3>
+                            <div class="project-buttons">
+                                <a href="https://github.com/sagarika200/Hangman" target="_blank" class="project-link-button github-button">
+                                    GitHub Repo <i class="fab fa-github"></i>
+                                </a>
+                                <a href="https://your-hangman-demo.com" target="_blank" class="project-link-button">
+                                    View Project <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-item card" data-full-desc="A modern, responsive personal online resume website built from my resume. Showcases my skills, experience, projects, and contact details." data-project-link="https://your-online-resume-demo.com">
+                        <div class="project-image-placeholder">
+                             <!-- Replace with actual project image -->
+                            <img src="images/project-online-resume.jpg" alt="Online Resume project" onerror="this.onerror=null;this.src='https://placehold.co/280x200/cccccc/333333?text=Online+Resume';">
+                        </div>
+                        <div class="project-content-body">
+                            <h3></h3>
+                            <a href="https://your-online-resume-demo.com" target="_blank" class="project-link-button">
+                                View Project <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-item card" data-full-desc="A personal portfolio website built using React.js, based on my resume. Showcases my skills, projects, education, and provides an interactive way to connect with me." data-project-link="https://your-web-portfolio-demo.com">
+                        <div class="project-image-placeholder">
+                             <!-- Replace with actual project image -->
+                            <img src="images/project-web-portfolio.jpg" alt="Web Portfolio project" onerror="this.onerror=null;this.src='https://placehold.co/280x200/cccccc/333333?text=Web+Portfolio';">
+                        </div>
+                        <div class="project-content-body">
+                            <h3></h3>
+                            <a href="https://your-web-portfolio-demo.com" target="_blank" class="project-link-button">
+                                View Project <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="certificates" class="section animate-on-scroll">
+            <div class="container">
+                <h2 class="section-title">Certificates</h2>
+                <div class="certificates-list">
+                    <div class="certificate-item card" data-full-desc="Got certified by Hindustan Aeronautics Limited (HAL) for designing a website.">
+                        <h3>Hindustan Aeronautics Limited</h3>
+                    </div>
+                    <div class="certificate-item card" data-full-desc="Got certified by Excelr for completing DSA program.">
+                        <h3>Excelr DSA Program</h3>
+                    </div>
+                    <div class="certificate-item card" data-full-desc="Completed a Deloitte job simulation involving data analysis and forensic technology. Created a data dashboard using Tableau. Used Excel to classify data and draw business conclusions.">
+                        <h3>Deloitte Australia Data Analytics Job Simulation on Forage</h3>
+                    </div>
+                    <div class="certificate-item card" data-full-desc="Gained expertise in Communication, Presentation, Resume, Interview Skills, Business Etiquette, IT, Accounting, and AI.">
+                        <h3>TCS ION Career Edge - Young Professional</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="interests" class="section animate-on-scroll">
+            <div class="container">
+                <h2 class="section-title">Interests</h2>
+                <ul class="interests-list">
+                    <li><i class="fas fa-code"></i> Building interactive web applications</li>
+                    <li><i class="fas fa-calendar-alt"></i> Managing events or functions</li>
+                    <li><i class="fas fa-running"></i> Enjoys team sports</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="contact" class="section animate-on-scroll">
+            <div class="container">
+                <h2 class="section-title">Get in Touch!</h2>
+                <p class="contact-text">Feel free to connect with me through the links below or send an email to <a href="mailto:sagarikahota94@gmail.com">sagarikahota94@gmail.com</a>.</p>
+                <div class="social-links large-icons">
+                    <a href="https://www.linkedin.com/in/sagarika-hota-b4471224a/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://github.com/sagarika200" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="mailto:sagarikahota94@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Sagarika Hota. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Pop-up/Modal structure (hidden by default) -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3 id="modal-title"></h3>
+            <p id="modal-text"></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Theme Toggle Logic
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+
+            // Check for saved theme preference
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'night') {
+                body.classList.add('night-theme');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>'; // Change icon to sun
+            } else {
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>'; // Default to moon icon
+            }
+
+            themeToggle.addEventListener('click', () => {
+                body.classList.toggle('night-theme');
+                if (body.classList.contains('night-theme')) {
+                    localStorage.setItem('theme', 'night');
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>'; // Change icon to sun
+                } else {
+                    localStorage.setItem('theme', 'day');
+                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>'; // Change icon to moon
+                }
+            });
+
+
+            // 1. Smooth Scrolling for Navigation
+            document.querySelectorAll('nav a').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+
+                    // Optional: Close mobile nav if open (if you implement a hamburger menu later)
+                    const navUl = document.querySelector('#main-nav ul');
+                    // if (navUl.classList.contains('show')) {
+                    //     navUl.classList.remove('show');
+                    // }
+                });
+            });
+
+            // 2. Pop-Up Details for Skills, Projects, and Certificates
+            const modal = document.getElementById('modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalText = document.getElementById('modal-text');
+            const closeButton = document.querySelector('.close-button');
+
+            function openModal(title, text) {
+                modalTitle.textContent = title;
+                modalText.textContent = text;
+                modal.classList.add('show'); // Add 'show' class to trigger CSS transition
+            }
+
+            function closeModal() {
+                modal.classList.remove('show'); // Remove 'show' class to trigger CSS transition
+            }
+
+            // Attach click listeners to skill items
+            document.querySelectorAll('.skill-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const title = item.querySelector('h3').textContent;
+                    const description = item.dataset.fullDesc; // Get description from data attribute
+                    openModal(title, description);
+                });
+            });
+
+            // Attach click listeners to project items
+            document.querySelectorAll('.project-item').forEach(item => {
+                item.addEventListener('click', (event) => {
+                    // Check if the clicked element or its parent is a project link button
+                    const isLinkButtonClicked = event.target.closest('.project-link-button');
+
+                    if (isLinkButtonClicked) {
+                        // If a button was clicked, let the button's href handle the navigation
+                        return;
+                    }
+
+                    // If not a button, open the modal with full description
+                    const title = item.querySelector('h3').textContent;
+                    const description = item.dataset.fullDesc;
+                    openModal(title, description);
+                });
+            });
+
+            // Attach click listeners to certificate items
+            document.querySelectorAll('.certificate-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const title = item.querySelector('h3').textContent;
+                    const description = item.dataset.fullDesc;
+                    openModal(title, description);
+                });
+            });
+
+            // Close modal event listeners
+            closeButton.addEventListener('click', closeModal);
+            window.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // 3. Section Scroll Animations (using Intersection Observer)
+            const sections = document.querySelectorAll('.animate-on-scroll');
+
+            const observerOptions = {
+                root: null, // viewport
+                rootMargin: '0px',
+                threshold: 0.1 // Trigger when 10% of the section is visible
+            };
+
+            const sectionObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        // Optionally, stop observing once animated to avoid re-triggering
+                        // observer.unobserve(entry.target); // Uncomment if you want animation only once
+                    } else {
+                        // Optional: remove 'active' class if you want sections to re-animate on scroll back
+                        // entry.target.classList.remove('active');
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                sectionObserver.observe(section);
+            });
+
+            // 4. Highlight active navigation link based on scroll position
+            const navLinks = document.querySelectorAll('#main-nav ul li a');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    // Adjust this value if your sticky header covers the section title
+                    const sectionHeight = section.clientHeight;
+                    if (pageYOffset >= sectionTop - sectionHeight / 3) {
+                        current = '#' + section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+            // Initial check for hero section animation on load (CSS handles this, but good to ensure JS is ready)
+            // No specific JS needed for .animate-hero as CSS animation-delay handles it.
+        });
+    </script>
+</body>
+</html>
